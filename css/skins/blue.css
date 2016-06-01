@@ -1,0 +1,114 @@
+body {
+  color: #11192F;
+  letter-spacing: 1px; }
+
+a {
+  color: #FF8D00; }
+
+p,
+body .main_footer,
+.s_about li {
+  color: #4E76D4; }
+
+.color_element {
+  color: #FF8D00; }
+
+.color_bg {
+  background-color: #FF8D00; }
+
+.color_border {
+  border-color: #FF8D00; }
+
+.bg_light {
+  background-color: #F4FAFF; }
+
+.bg_dark {
+  background-color: #11192F;
+  color: #fff; }
+  .bg_dark .s_descr:after {
+    background-color: #fff; }
+
+.toggle_mnu {
+  background-color: #000;
+  box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.5); }
+
+.desktop_mnu a:hover {
+  color: #FF8D00;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); }
+.desktop_mnu a {
+  color: #fff;
+  letter-spacing: 2px;
+  transition: 0.5s ease; }
+
+.mobile_mnu a:hover {
+  color: #FF8D00; }
+.mobile_mnu a {
+  letter-spacing: 5px; }
+
+.top_text h1 {
+  box-shadow: 0px 0px 10px 5px #4E76D4;
+  text-shadow: 2px 2px 3px #4E76D4; }
+.top_text p {
+  text-shadow: 1px 1px 2px #4E76D4;
+  color: #F4FAFF;
+  letter-spacing: 5px; }
+
+.s_descr {
+  letter-spacing: 5px; }
+  .s_descr:after {
+    background-color: #11192F; }
+
+section h2 {
+  letter-spacing: 2px; }
+section h3 {
+  letter-spacing: 3px;
+  color: #4E76D4; }
+
+.s_about p:nth-child(even) {
+  color: #FF8D00; }
+.s_about span {
+  color: #11192F; }
+.s_about i {
+  color: #FF8D00; }
+
+.resume_container h3 {
+  color: #11192F;
+  letter-spacing: 1px; }
+
+.resume_item .year {
+  color: #fff;
+  background-color: #FF8D00; }
+.resume_item .resume_title {
+  letter-spacing: 1px; }
+.resume_item li {
+  color: #4E76D4; }
+
+.s_portfolio li {
+  color: #4E76D4;
+  letter-spacing: 2px; }
+  .s_portfolio li.active {
+    color: #fff;
+    border-bottom: 1px solid #FF8D00; }
+.s_portfolio .port_item_cont a {
+  border-color: #FF8D00; }
+
+.contacts_icon {
+  color: #FF8D00; }
+
+.text-danger {
+  color: #FF8D00; }
+
+form input:focus,
+form textarea:focus {
+  outline-color: #FF8D00; }
+form input,
+form textarea {
+  letter-spacing: 2px; }
+form button {
+  background-color: #FF8D00;
+  letter-spacing: 2px; }
+form .form-group {
+  letter-spacing: 2px;
+  color: #4E76D4; }
+
+/*# sourceMappingURL=blue.css.map */
