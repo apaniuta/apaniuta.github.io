@@ -1,0 +1,21 @@
+#field {
+	outline: 2px solid black;
+}
+.params_wrapper {
+	display: inline-block;
+	margin: 20px;
+}
+.params_wrapper input {
+	margin-bottom: 20px;
+	margin-left: 10px;
+}
+.buttons_wrapper {
+	display: inline-block;
+	position: absolute;
+	padding-right: 20px;
+	padding-bottom: 12px;
+}
+.buttons_wrapper button {
+	margin-bottom: 10px;
+}
+
