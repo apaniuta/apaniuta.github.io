@@ -1,35 +1,33 @@
-/*All params:
+/*All parameters:
 	var game = new GameOfLife({
-	canvasId: "field",  //your id of canvas element
+	canvasId: 'field',  //!required! your id of canvas element
 	cellSize: 20,       //in px
-	color: "#000000",   //in HEX
+	color: '#000000',   //in HEX
 	sizeX: 20,          //in px
 	sizeY: 20,          //in px
 	speed: 200          //im ms
 	});
-	Init params need to be equal input value.
+	Init params need to be equal input values.
 */
-
-
 
 function GameOfLife (params) {
 	'use strict';
 
-	var canvasId = params["canvasId"],
-			cellSize = params["cellSize"] || 20,
-			color = params["color"] || "#000000",
-			sizeX = params["sizeX"] || 20,
-			sizeY = params["sizeY"] || 20,
-			speed = params["speed"] || 200;
+	var canvasId = params['canvasId'],
+			cellSize = params['cellSize'] || 20,
+			color = params['color'] || '#000000',
+			sizeX = params['sizeX'] || 20,
+			sizeY = params['sizeY'] || 20,
+			speed = params['speed'] || 200;
 
 	var currentArray = initArray(),
-			status,
-			timerId;
+			timerId,
+			status;
 
 	var field = document.getElementById(canvasId),
 			ctx = field.getContext('2d');
 
-	field.addEventListener("click", function(event) {
+	field.addEventListener('click', function(event) {
 		function getCoords(elem) {
 			var box = elem.getBoundingClientRect();
 			return {
@@ -51,18 +49,18 @@ function GameOfLife (params) {
 				ctx.clearRect(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2, cellSize - 2);
 			}
 		} else {
-			alert('Для заполнения клетки нажмите паузу');
+			alert('To fill the cell press PAUSE');
 		}
 	});
 
-	field.addEventListener("mousedown", function(event) {
+	field.addEventListener('mousedown', function(event) {
 		event.preventDefault();
 	});
 
 	function drawField(cellSize) {
 		field.width = sizeX * cellSize;
 		field.height = sizeY * cellSize;
-		ctx.strokeStyle = "#4c4747";
+		ctx.strokeStyle = '#4c4747';
 		ctx.lineWidth = 0.3;
 
 		for(var y = 0; y < sizeY; y++) {
@@ -79,8 +77,9 @@ function GameOfLife (params) {
 
 	function generateNextArray() {
 		var nextArray = [];
-		for (var i = 0; i < currentArray.length; i++)
-		nextArray[i] = currentArray[i].slice();
+		for (var i = 0; i < currentArray.length; i++) {
+			nextArray[i] = currentArray[i].slice();
+		}
 
 		for(var y = 0; y < sizeY; y++) {
 			for(var x = 0; x < sizeX; x++) {
@@ -120,9 +119,7 @@ function GameOfLife (params) {
 			}
 		}
 
-		for (var i = 0; i < nextArray.length; i++)
-		currentArray[i] = nextArray[i].slice();
-		return currentArray;
+		return nextArray;
 	}
 
 	function initArray() {
@@ -134,6 +131,7 @@ function GameOfLife (params) {
 				currentArray[y][x] = 0;
 			}
 		}
+
 		return currentArray;
 	}
 
@@ -141,7 +139,9 @@ function GameOfLife (params) {
 		for(var y = 0; y < sizeY; y++) {
 			for(var x = 0; x < sizeX; x++) {
 				ctx.clearRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
-				if (array[y][x] === 1) fill(x * cellSize + 1, y * cellSize + 1, cellSize - 2);
+				if (array[y][x] === 1) {
+					fill(x * cellSize + 1, y * cellSize + 1, cellSize - 2);
+				}
 			}
 		}
 	}
@@ -177,36 +177,34 @@ function GameOfLife (params) {
 		if (status !== 'working') {
 			step();
 			timerId = setInterval(step, speed);
-			status = "working";
+			status = 'working';
 		}
 	}
 
 	function pause() {
+		if (status !== 'paused') {
 		clearInterval(timerId);
-		status = null;
+		status = 'paused';
+		}
 	}
 
 	function random() {
 		if(status !== 'working') {
 			currentArray = generateRandomArray();
 			drawArray(currentArray);
-		} else {
-		alert('Для заполнения клеток случайным образом нажмите паузу');
 		}
 	}
 
 	drawField(cellSize);
 	drawArray(currentArray);
 
-	this.clearField = function(){
+	this.clearField = function() {
 		if(status !== 'working') {
 			clear();
-		} else {
-			alert('Для очистки поля нажмите паузу');
 		}
 	}
 
-	this.setCellSize = function(value){
+	this.setCellSize = function(value) {
 		if(cellSize !== +value) {
 			pause();
 			cellSize = +value;
@@ -215,7 +213,7 @@ function GameOfLife (params) {
 		}
 	}
 
-	this.setColor = function(value){
+	this.setColor = function(value) {
 		if(color !== value) {
 			pause();
 			color = value;
@@ -223,7 +221,7 @@ function GameOfLife (params) {
 		}
 	}
 
-	this.setSizeX = function(value){
+	this.setSizeX = function(value) {
 		if(sizeX !== +value) {
 			pause();
 			sizeX = +value;
@@ -233,7 +231,7 @@ function GameOfLife (params) {
 		}
 	}
 
-	this.setSizeY = function(value){
+	this.setSizeY = function(value) {
 		if(sizeY !== +value) {
 			pause();
 			sizeY = +value;
@@ -243,7 +241,7 @@ function GameOfLife (params) {
 		}
 	}
 
-	this.setSpeed = function(value){
+	this.setSpeed = function(value) {
 		if(speed !== +value) {
 			pause();
 			speed = +value;
@@ -255,4 +253,4 @@ function GameOfLife (params) {
 	this.start = start;
 	this.pause = pause;
 	this.random = random;
-}
+};
