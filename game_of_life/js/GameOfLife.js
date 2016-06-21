@@ -1,78 +1,44 @@
 /*All parameters:
 	var game = new GameOfLife({
 	canvasId: 'field',  //!required! your id of canvas element
-	cellSize: 20,       //in px
+	cellSize: 10,       //in px
 	color: '#000000',   //in HEX
-	sizeX: 20,          //in px
-	sizeY: 20,          //in px
-	speed: 200          //im ms
+	sizeX: 50,          //in px
+	sizeY: 50,          //in px
+	speed: 100          //im ms
 	});
-	Init params need to be equal input values.
+	Initial parameters need to be equal input values.
 */
 
-function GameOfLife (params) {
+function GameOfLife(params) {
 	'use strict';
 
+	//Initial parameters
 	var canvasId = params['canvasId'],
-			cellSize = params['cellSize'] || 20,
+			cellSize = params['cellSize'] || 10,
 			color = params['color'] || '#000000',
-			sizeX = params['sizeX'] || 20,
-			sizeY = params['sizeY'] || 20,
-			speed = params['speed'] || 200;
-
-	var currentArray = initArray(),
-			timerId,
-			status;
+			sizeX = params['sizeX'] || 50,
+			sizeY = params['sizeY'] || 50,
+			speed = params['speed'] || 100;
 
 	var field = document.getElementById(canvasId),
 			ctx = field.getContext('2d');
 
-	field.addEventListener('click', function(event) {
-		function getCoords(elem) {
-			var box = elem.getBoundingClientRect();
-			return {
-				top: box.top + pageYOffset,
-				left: box.left + pageXOffset
-			};
-		}
+	//Calculations
+	var currentArray = initArray(),
+			timerId = null;
 
-		var fieldCoords = getCoords(this);
-		var cellX = Math.floor((event.pageX - fieldCoords.left) / cellSize);
-		var cellY = Math.floor((event.pageY - fieldCoords.top) / cellSize);
-
-		if(status !== 'working') {
-			if (currentArray[cellY][cellX] === 0) {
-				currentArray[cellY][cellX] = 1;
-				fill(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2);
-			} else {
-				currentArray[cellY][cellX] = 0;
-				ctx.clearRect(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2, cellSize - 2);
-			}
-		} else {
-			alert('To fill the cell press PAUSE');
-		}
-	});
-
-	field.addEventListener('mousedown', function(event) {
-		event.preventDefault();
-	});
-
-	function drawField(cellSize) {
-		field.width = sizeX * cellSize;
-		field.height = sizeY * cellSize;
-		ctx.strokeStyle = '#4c4747';
-		ctx.lineWidth = 0.3;
+	function initArray() {
+		currentArray = [];
 
 		for(var y = 0; y < sizeY; y++) {
+			currentArray[y] = [];
 			for(var x = 0; x < sizeX; x++) {
-				ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+				currentArray[y][x] = 0;
 			}
 		}
-	}
 
-	function fill(x, y, cellSize) {
-		ctx.fillStyle = color;
-		ctx.fillRect(x, y, cellSize, cellSize);
+		return currentArray;
 	}
 
 	function generateNextArray() {
@@ -122,30 +88,6 @@ function GameOfLife (params) {
 		return nextArray;
 	}
 
-	function initArray() {
-		currentArray = [];
-
-		for(var y = 0; y < sizeY; y++) {
-			currentArray[y] = [];
-			for(var x = 0; x < sizeX; x++) {
-				currentArray[y][x] = 0;
-			}
-		}
-
-		return currentArray;
-	}
-
-	function drawArray(array) {
-		for(var y = 0; y < sizeY; y++) {
-			for(var x = 0; x < sizeX; x++) {
-				ctx.clearRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
-				if (array[y][x] === 1) {
-					fill(x * cellSize + 1, y * cellSize + 1, cellSize - 2);
-				}
-			}
-		}
-	}
-
 	function generateRandomArray() {
 		var randArr = [];
 
@@ -159,6 +101,100 @@ function GameOfLife (params) {
 		return randArr;
 	}
 
+	//Draw
+	function drawField(cellSize) {
+		field.width = sizeX * cellSize;
+		field.height = sizeY * cellSize;
+		ctx.strokeStyle = '#4c4747';
+		ctx.lineWidth = 0.3;
+
+		for(var y = 0; y < sizeY; y++) {
+			for(var x = 0; x < sizeX; x++) {
+				ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+			}
+		}
+	}
+
+	function fill(x, y, cellSize) {
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, cellSize, cellSize);
+	}
+
+	function drawArray(array) {
+		for(var y = 0; y < sizeY; y++) {
+			for(var x = 0; x < sizeX; x++) {
+				ctx.clearRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
+				if (array[y][x] === 1) {
+					fill(x * cellSize + 1, y * cellSize + 1, cellSize - 2);
+				}
+			}
+		}
+	}
+
+	//Events
+	var mouseDown = false,
+			status = 'paused',
+			cellX = 0,
+			cellY = 0;
+
+	function getCoords(elem) {
+		var box = elem.getBoundingClientRect();
+		return {
+			top: box.top + pageYOffset,
+			left: box.left + pageXOffset
+		};
+	}
+	
+	function mouseSwitch(event, cellX, cellY) {
+
+		event.preventDefault();
+
+		if(status !== 'working') {
+			if (currentArray[cellY][cellX] === 0) {
+				currentArray[cellY][cellX] = 1;
+				fill(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2);
+			} else {
+				currentArray[cellY][cellX] = 0;
+				ctx.clearRect(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2, cellSize - 2);
+			}
+		}
+	}
+
+	function mousePosition(e) {
+		var fieldCoords = getCoords(field);
+		var cellX = Math.floor((event.pageX - fieldCoords.left) / cellSize);
+		var cellY = Math.floor((event.pageY - fieldCoords.top) / cellSize);
+		return [cellX, cellY]
+	}
+
+	function fieldMouseDown(e) {
+		var position = mousePosition(e);
+		mouseSwitch(e, position[0], position[1]);
+		cellX = position[0];
+		cellY = position[1];
+		mouseDown = true;
+	}
+
+	function fieldMouseUp() {
+		mouseDown = false;
+	}
+
+	function fieldMouseMove(e) {
+		if (mouseDown) {
+			var position = mousePosition(e);
+			if ((position[0] !== cellX) || (position[1] !== cellY)) {
+				mouseSwitch(e, position[0], position[1]);
+				cellX = position[0];
+				cellY = position[1];
+			}
+		}
+	}
+
+	field.addEventListener('mousemove', function(e) {fieldMouseMove(e)});
+	field.addEventListener('mousedown', function(e) {fieldMouseDown(e)});
+	field.addEventListener('mouseup', function(e) {fieldMouseUp()});
+
+	//Actions
 	function step() {
 		currentArray = generateNextArray();
 		drawArray(currentArray);
@@ -195,9 +231,11 @@ function GameOfLife (params) {
 		}
 	}
 
+	//Initial field
 	drawField(cellSize);
 	drawArray(currentArray);
 
+	//Parameters setters
 	this.clearField = function() {
 		if(status !== 'working') {
 			clear();
