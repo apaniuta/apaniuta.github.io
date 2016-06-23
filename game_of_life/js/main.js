@@ -1,5 +1,5 @@
 var game = new GameOfLife({
-	canvasId: 'field',
+	canvasId: 'field'
 });
 
 var startStop = document.getElementById('play_stop');
@@ -26,12 +26,21 @@ pause.addEventListener('click', function(){
 
 var oneStep = document.getElementById('one_step');
 oneStep.addEventListener('click', game.step);
+oneStep.addEventListener('mouseup', function () {
+	this.blur();
+});
 
 var random = document.getElementById('random');
 random.addEventListener('click', game.random);
+random.addEventListener('mouseup', function () {
+	this.blur();
+});
 
 var clear = document.getElementById('clear');
 clear.addEventListener('click', game.clearField);
+clear.addEventListener('mouseup', function () {
+	this.blur();
+});
 
 var sizeX = document.getElementById('sizeX');
 var sizeY = document.getElementById('sizeY');
@@ -40,6 +49,9 @@ var color = document.getElementById('color');
 var speed = document.getElementById('speed');
 var applyButton = document.getElementById('apply');
 
+applyButton.addEventListener('mouseup', function () {
+	this.blur();
+});
 applyButton.addEventListener('click', function(e){
 
 	if ((sizeX.value > 0 && sizeX.value <= 200) && (sizeY.value > 0 && sizeY.value <= 200)) {
@@ -61,4 +73,9 @@ applyButton.addEventListener('click', function(e){
 	}
 
 	game.setColor(color.value);
+});
+
+var footer = document.getElementById('footer');
+window.addEventListener('scroll', function() {
+	footer.style.top = -window.pageYOffset + document.body.clientHeight - 60 + "px";
 });

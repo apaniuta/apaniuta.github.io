@@ -149,12 +149,14 @@ function GameOfLife(params) {
 
 		event.preventDefault();
 
-		if (currentArray[cellY][cellX] === 0) {
-			currentArray[cellY][cellX] = 1;
-			fill(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2);
-		} else {
-			currentArray[cellY][cellX] = 0;
-			ctx.clearRect(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2, cellSize - 2);
+		if(status !== 'working') {
+			if (currentArray[cellY][cellX] === 0) {
+				currentArray[cellY][cellX] = 1;
+				fill(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2);
+			} else {
+				currentArray[cellY][cellX] = 0;
+				ctx.clearRect(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2, cellSize - 2);
+			}
 		}
 	}
 
