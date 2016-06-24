@@ -76,6 +76,14 @@ applyButton.addEventListener('click', function(e){
 });
 
 var footer = document.getElementById('footer');
+if (document.body.clientHeight < window.innerHeight) {
+	footer.style.top = window.innerHeight - footer.clientHeight + "px";
+}
+window.addEventListener('resize', function() {
+	if (document.body.clientHeight < window.innerHeight) {
+		footer.style.top = window.innerHeight - footer.clientHeight + "px";
+	}
+});	
 window.addEventListener('scroll', function() {
-	footer.style.top = -window.pageYOffset + document.body.clientHeight - 60 + "px";
+	footer.style.top = -window.pageYOffset + document.body.clientHeight - footer.clientHeight + "px";
 });
