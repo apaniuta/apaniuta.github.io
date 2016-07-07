@@ -31,9 +31,9 @@ function GameOfLife(params) {
 	function initArray() {
 		currentArray = [];
 
-		for(var y = 0; y < sizeY; y++) {
+		for (var y = 0; y < sizeY; y++) {
 			currentArray[y] = [];
-			for(var x = 0; x < sizeX; x++) {
+			for (var x = 0; x < sizeX; x++) {
 				currentArray[y][x] = 0;
 			}
 		}
@@ -47,8 +47,8 @@ function GameOfLife(params) {
 			nextArray[i] = currentArray[i].slice();
 		}
 
-		for(var y = 0; y < sizeY; y++) {
-			for(var x = 0; x < sizeX; x++) {
+		for (var y = 0; y < sizeY; y++) {
+			for (var x = 0; x < sizeX; x++) {
 
 				var topY = (y-1 < 0) ? sizeY-1 : y-1,
 						bottomY = (y+1 > sizeY-1) ? 0 : y+1,
@@ -91,9 +91,9 @@ function GameOfLife(params) {
 	function generateRandomArray() {
 		var randArr = [];
 
-		for(var y = 0; y < sizeY; y++) {
+		for (var y = 0; y < sizeY; y++) {
 			randArr[y] = [];
-			for(var x = 0; x < sizeX; x++) {
+			for (var x = 0; x < sizeX; x++) {
 				randArr[y][x] = Math.round(Math.random());
 			}
 		}
@@ -108,8 +108,8 @@ function GameOfLife(params) {
 		ctx.strokeStyle = '#4c4747';
 		ctx.lineWidth = 0.3;
 
-		for(var y = 0; y < sizeY; y++) {
-			for(var x = 0; x < sizeX; x++) {
+		for (var y = 0; y < sizeY; y++) {
+			for (var x = 0; x < sizeX; x++) {
 				ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
 			}
 		}
@@ -121,8 +121,8 @@ function GameOfLife(params) {
 	}
 
 	function drawArray(array) {
-		for(var y = 0; y < sizeY; y++) {
-			for(var x = 0; x < sizeX; x++) {
+		for (var y = 0; y < sizeY; y++) {
+			for (var x = 0; x < sizeX; x++) {
 				ctx.clearRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
 				if (array[y][x] === 1) {
 					fill(x * cellSize + 1, y * cellSize + 1, cellSize - 2);
@@ -149,7 +149,7 @@ function GameOfLife(params) {
 
 		event.preventDefault();
 
-		if(status !== 'working') {
+		if (status !== 'working') {
 			if (currentArray[cellY][cellX] === 0) {
 				currentArray[cellY][cellX] = 1;
 				fill(cellX * cellSize + 1, cellY * cellSize + 1, cellSize - 2);
@@ -201,8 +201,8 @@ function GameOfLife(params) {
 	}
 
 	function clear() {
-		for(var y = 0; y < sizeY; y++) {
-			for(var x = 0; x < sizeX; x++) {
+		for (var y = 0; y < sizeY; y++) {
+			for (var x = 0; x < sizeX; x++) {
 				currentArray[y][x] = 0;
 				ctx.clearRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
 			}
@@ -225,7 +225,7 @@ function GameOfLife(params) {
 	}
 
 	function random() {
-		if(status !== 'working') {
+		if (status !== 'working') {
 			currentArray = generateRandomArray();
 			drawArray(currentArray);
 		}
@@ -237,13 +237,13 @@ function GameOfLife(params) {
 
 	//Parameters setters
 	this.clearField = function() {
-		if(status !== 'working') {
+		if (status !== 'working') {
 			clear();
 		}
 	}
 
 	this.setCellSize = function(value) {
-		if(cellSize !== +value) {
+		if (cellSize !== +value) {
 			pause();
 			cellSize = +value;
 			drawField(cellSize);
@@ -252,7 +252,7 @@ function GameOfLife(params) {
 	}
 
 	this.setColor = function(value) {
-		if(color !== value) {
+		if (color !== value) {
 			pause();
 			color = value;
 			drawArray(currentArray);
@@ -260,7 +260,7 @@ function GameOfLife(params) {
 	}
 
 	this.setSizeX = function(value) {
-		if(sizeX !== +value) {
+		if (sizeX !== +value) {
 			pause();
 			sizeX = +value;
 			drawField(cellSize);
@@ -270,7 +270,7 @@ function GameOfLife(params) {
 	}
 
 	this.setSizeY = function(value) {
-		if(sizeY !== +value) {
+		if (sizeY !== +value) {
 			pause();
 			sizeY = +value;
 			drawField(cellSize);
@@ -280,7 +280,7 @@ function GameOfLife(params) {
 	}
 
 	this.setSpeed = function(value) {
-		if(speed !== +value) {
+		if (speed !== +value) {
 			pause();
 			speed = +value;
 		}
