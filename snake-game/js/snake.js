@@ -28,7 +28,7 @@
 	}
 	//Задаём масштаб
 	function scale() {
-		canvSize = (innerWidth < innerHeight ? innerWidth : innerHeight) * 0.8;
+		canvSize = innerWidth < innerHeight ? innerWidth * 0.95: innerHeight * 0.8;
 		cellSize = canvSize / 25; //Делим только на нечетные!!! Иначе центральныйквадратный блок неправильно рисуется.
 		font = cellSize / 1.5;
 		grid = canvSize / cellSize;
