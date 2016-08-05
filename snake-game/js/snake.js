@@ -355,7 +355,7 @@
 		}, delay);
 	}
 	//Описываем, когда заканчивается игра
-	/*function gameOver() {
+	function gameOver() {
 		dir = 'right';
 		speed = speed || 45;
 		setDelay();
@@ -364,7 +364,7 @@
 		createFood();
 		draw();
 		interval();
-	}*/
+	}
 	//Инициализация игры
 	function init() {
 		dir = 'right';
