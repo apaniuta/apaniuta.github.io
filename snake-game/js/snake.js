@@ -5,29 +5,51 @@
 	var canvas = document.getElementById('canvas'),
 			ctx = canvas.getContext('2d');
 	//Объявляем основные переменные
-	var canvSize = null,
-			cellSize = null,
-			font = null,
-			grid = null,
-			w = null,
+	var canvSize = 620,
+			cellSize = 20,
+			font = 15,
+			grid = canvSize / cellSize,
+			w = canvSize,
 			h = w,
 			speed = null,
-			delay = null,
+			settedSpeed = speed,
 			score = 0,
 			highScore = score,
-			dir = null,
-			gameLoop = null,
 			snakeLength = 8,
+			dir = null,
+			delay = null,
+			dirDelay = delay / 2,
+			gameLoop = null,
 			currSnake = null,
 			food = null,
-			boundaries = true,
-			withBlocks = false;
+			boundaries = false,
+			withBlocks = true,
+			paused = null;
+	//Задаём ширину и высоту поля
+	canvas.width = w;
+	canvas.height = h;
+	//Объявляем используемые кнопки и направление змейки
+	var KEY = {
+				LEFT: 37,
+				UP: 38,
+				RIGHT: 39,
+				DOWN: 40,
+				ESC: 27,
+				SPACE: 32
+			},
+			DIR = {
+				UP:'up',
+				DOWN:'down',
+				LEFT:'left',
+				RIGHT:'right',
+				//OPPOSITE:['down', 'up', 'right', 'left']
+			};
 	//Считаем задержку
 	function setDelay() {
 		delay = 5000 / speed;
 	}
 	//Задаём масштаб
-	function scale() {
+	/*function scale() {
 		canvSize = innerWidth < innerHeight ? innerWidth * 0.95: innerHeight * 0.8;
 		cellSize = canvSize / 25; //Делим только на нечетные!!! Иначе центральныйквадратный блок неправильно рисуется.
 		font = cellSize / 1.5;
@@ -36,13 +58,13 @@
 		h = w;
 		canvas.width = w;
 		canvas.height = h;
-	}
+	}*/
 	//Snake
 	//Инициализируем змейку
 	function initSnake() {
 		currSnake = [];
 		for (var i = snakeLength - 1; i >= 0; i--) {
-			currSnake.push({x: i + 1, y: 1});
+			currSnake.push({x: i + 3, y: 6});
 		}
 	}
 	//Генерируем следующую змейку
@@ -51,13 +73,13 @@
 			x: currSnake[0].x, 
 			y: currSnake[0].y
 		};
-		if (dir === 'right') {
+		if (dir === DIR.RIGHT) {
 			head.x++;
-		} else if (dir === 'left') {
+		} else if (dir === DIR.LEFT) {
 			head.x--;
-		} else if (dir === 'up') {
+		} else if (dir === DIR.UP) {
 			head.y--;
-		} else if (dir === 'down') {
+		} else if (dir === DIR.DOWN) {
 			head.y++;
 		}
 		for (var i = 0; i < currSnake.length; i++) {
@@ -238,24 +260,24 @@
 	function createBlocks() {
 		if (withBlocks) {
 			//SquareBlocks
-			/*blocks.push(new SquareBlock(2, 2, blockSize));
-			blocks.push(new SquareBlock(grid - 4, 2, blockSize));
-			blocks.push(new SquareBlock(2, grid - 4, blockSize));
-			blocks.push(new SquareBlock(grid - 4, grid - 4, blockSize));
-			blocks.push(new SquareBlock((grid / 2) - 1, (grid / 2) - 1, blockSize));*/
+			/*blocks.push(SquareBlock(2, 2, blockSize));
+			blocks.push(SquareBlock(grid - 4, 2, blockSize));
+			blocks.push(SquareBlock(2, grid - 4, blockSize));
+			blocks.push(SquareBlock(grid - 4, grid - 4, blockSize));
+			blocks.push(SquareBlock((grid / 2) - 1, (grid / 2) - 1, blockSize));*/
 			//Блоки буквой "Г" по бокам
-			blocks.push(new Xblock(2, 2, xBlockLength));
-			blocks.push(new Yblock(2, 2, yBlockLength));
-			blocks.push(new Xblock(grid - 5, 2, xBlockLength));
-			blocks.push(new Yblock(grid - 3, 2, yBlockLength));
-			blocks.push(new Xblock(2, grid - 3, xBlockLength));
-			blocks.push(new Yblock(2, grid - 5, yBlockLength));
-			blocks.push(new Xblock(grid - 5, grid - 3, xBlockLength));
-			blocks.push(new Yblock(grid - 3, grid - 5, yBlockLength));
+			blocks.push(Xblock(2, 2, xBlockLength));
+			blocks.push(Yblock(2, 2, yBlockLength));
+			blocks.push(Xblock(grid - 5, 2, xBlockLength));
+			blocks.push(Yblock(grid - 3, 2, yBlockLength));
+			blocks.push(Xblock(2, grid - 3, xBlockLength));
+			blocks.push(Yblock(2, grid - 5, yBlockLength));
+			blocks.push(Xblock(grid - 5, grid - 3, xBlockLength));
+			blocks.push(Yblock(grid - 3, grid - 5, yBlockLength));
 			//Квадратный блок 3х3 в центре
-			blocks.push(new Xblock((grid / 2) - 1.5, (grid / 2) - 1.5, xBlockLength));
-			blocks.push(new Xblock((grid / 2) - 1.5, (grid / 2) - 0.5, xBlockLength));
-			blocks.push(new Xblock((grid / 2) - 1.5, (grid / 2) + 0.5, xBlockLength));
+			blocks.push(Xblock((grid / 2) - 1.5, (grid / 2) - 1.5, xBlockLength));
+			blocks.push(Xblock((grid / 2) - 1.5, (grid / 2) - 0.5, xBlockLength));
+			blocks.push(Xblock((grid / 2) - 1.5, (grid / 2) + 0.5, xBlockLength));
 		}
 	}
 	//Рисуем преграды
@@ -311,80 +333,166 @@
 	}
 	//Управление змейкой клавишами
 	function keyBindings(e) {
-		var key = e.keyCode,
-				dirDelay = delay/2;
-		if (key === 37 && dir !== 'right') {
-			//Задержка от одновременного нажатия 2ух кнопок
-			setTimeout(function (){
-				dir = 'left';
-			}, dirDelay);
-			
-		} else if (key === 38 && dir !== 'down') {
-			setTimeout(function (){
-				dir = 'up';
-			}, dirDelay);
-			
-		} else if (key === 39 && dir !== 'left') {
-			setTimeout(function (){
-				dir = 'right';
-			}, dirDelay);
-			
-		} else if (key === 40 && dir !== 'up') {
-			setTimeout(function (){
-				dir = 'down';
-			}, dirDelay);
-			
+		//Убираем действие по умолчанию, при нажатии кнопок (прокрутка страницы)
+		e.preventDefault();
+		var key = e.keyCode;
+
+		switch (key) {
+			case KEY.LEFT: if (dir !== DIR.RIGHT) {
+				//Предотвращаем одновременное нажатие клавиш
+				setTimeout(function () {
+					dir = DIR.LEFT;
+				}, dirDelay);
+				break;
+			}
+			case KEY.RIGHT: if (dir !== DIR.LEFT) {
+				setTimeout(function () {
+					dir = DIR.RIGHT;
+				}, dirDelay);
+				break;
+			}
+			case KEY.UP: if (dir !== DIR.DOWN) {
+				setTimeout(function () {
+					dir = DIR.UP;
+				}, dirDelay);
+				break;
+			}
+			case KEY.DOWN: if (dir !== DIR.UP) {
+				setTimeout(function () {
+					dir = DIR.DOWN;
+				}, dirDelay);
+				break;
+			}
+			case KEY.ESC:
+			case KEY.SPACE: {
+				pause();
+				break;
+			}
 		}
 	}
+	//Добавляем кнопки для девайсов с тач скрином
+	var leftBtn = document.querySelector('.left'),
+			rightBtn = document.querySelector('.right'),
+			upBtn = document.querySelector('.up'),
+			downBtn = document.querySelector('.down');
+	leftBtn.addEventListener('mousedown', function (e) {
+		e.preventDefault();
+		if (dir !== DIR.RIGHT) {
+				setTimeout(function () {
+					dir = DIR.LEFT;
+				}, dirDelay);
+		}
+	});
+	rightBtn.addEventListener('mousedown', function (e) {
+		e.preventDefault();
+		if (dir !== DIR.LEFT) {
+				setTimeout(function () {
+					dir = DIR.RIGHT;
+				}, dirDelay);
+		}
+	});
+	upBtn.addEventListener('mousedown', function (e) {
+		e.preventDefault();
+		if (dir !== DIR.DOWN) {
+				setTimeout(function () {
+					dir = DIR.UP;
+				}, dirDelay);
+		}
+	});
+	downBtn.addEventListener('mousedown', function (e) {
+		e.preventDefault();
+		if (dir !== DIR.UP) {
+				setTimeout(function () {
+					dir = DIR.DOWN;
+				}, dirDelay);
+		}
+	});
 	//Проверяем столкновение
 	function checkCollision (obj1, obj2) {
-		if (obj1.x === obj2.x && obj1.y ===obj2.y) {
-			return true;
-		} else {
-			return false;
-		}
+		return obj1.x === obj2.x && obj1.y ===obj2.y
 	}
 	//Создаём интервал
 	function interval() {
 		if (gameLoop) {
-			clearInterval(gameLoop);
+			clearTimeout(gameLoop);
+			gameLoop = null;
 		}
-		gameLoop = setInterval(function () {
-			nextSnake();
-			draw();
-		}, delay);
+		if (!paused) {
+			gameLoop = setTimeout(function () {
+				nextSnake();
+				draw();
+				interval();
+			}, delay);
+		}
 	}
-	//Описываем, когда заканчивается игра
-	function gameOver() {
-		dir = 'right';
-		speed = speed || 45;
+	//Начало игры
+	function start() {
+		canvas.style.zIndex = '1';
+		dir = DIR.RIGHT;
+		speed = settedSpeed || 45;
 		setDelay();
 		score = 0;
 		initSnake();
+		createBlocks();
+		initSnake();
 		createFood();
 		draw();
+		paused = false;
 		interval();
+		gameStatus.innerHTML = '';
+	}
+	//Добавляем div со статусом игры внутри
+	var gameStatus = document.createElement('div');
+	gameStatus.style.display = 'none';
+	gameStatus.classList.add('game-status');
+	document.body.appendChild(gameStatus);
+	//Остановка игры
+	function gameOver() {
+		canvas.style.zIndex = '0';
+		paused = true;
+		gameStatus.innerHTML = 'gameOver';
+	}
+	//Пауза
+	function pause() {
+		canvas.style.zIndex = '0';
+		paused = true;
+		gameStatus.innerHTML = 'paused';
+	}
+	canvas.addEventListener('click', function () {
+		pause();
+	});
+	//Продолжаем игру после паузы
+	function resume() {
+		canvas.style.zIndex = '1';
+		paused = false;
+		interval();
+		gameStatus.innerHTML = '';
 	}
 	//Инициализация игры
 	function init() {
-		dir = 'right';
+		dir = DIR.RIGHT;
 		speed = speed || 45;
-		setDelay();
+		paused = false;
 		score = 0;
-		scale();
+		//scale();
 		initSnake();
 		createBlocks();
 		createFood();
 		draw();
-		interval();
-		document.addEventListener('keydown', function (e) {
-			keyBindings(e);
-		});
+		document.addEventListener('keydown', keyBindings);
 	}
 	//Методы, которые видны наружу
 	return {
 		//Инициализация
 		init: init,
+		//Старт
+		start: start,
+		//Продолжить игру после паузы
+		resume: resume,
+		//Рекордное кол-во очков
+		getHighScore: function () {
+				return highScore;
+		},
 		//Установка длины змейки (по умолчанию: 8)
 		snakeLength: function (value) {
 			if (value) {
@@ -401,10 +509,9 @@
 			} else if (value === 'no') {
 				boundaries = false;
 			} else {
-				throw new Error('Введите "yes" или "no"');
+				throw Error('Введите "yes" или "no"');
 			}
 		},
-
 		//Установка препятствий (по умолчанию: без препятствий)
 		setBlocks: function (value) {
 			if (value === 'yes') {
@@ -412,19 +519,19 @@
 			} else if (value === 'no') {
 				withBlocks = false;
 			} else {
-				throw new Error('Введите "yes" или "no"');
+				throw Error('Введите "yes" или "no"');
 			}
 		},
 		//Установка скорости игры (по умолчанию: средняя)
 		setGameSpeed: function (value) {
 			if (value === 'slow') {
-				speed = 25;
+				settedSpeed = 25;
 			} else if (value === 'medium') {
-				speed = 45;
+				settedSpeed = 45;
 			} else if (value === 'fast') {
-				speed = 70;
+				settedSpeed = 70;
 			} else {
-				throw new Error('Скорость может быть "fast", "medium" или "slow"');
+				throw Error('Скорость может быть "fast", "medium" или "slow"');
 			}
 		}
 	}
