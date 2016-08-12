@@ -74,7 +74,8 @@ main {
     .main-menu .created-by p {
       font-family: "Ubuntu", sans-serif;
       font-size: 1.2em;
-      font-style: italic; }
+      font-style: italic;
+      cursor: default; }
     .main-menu .created-by a {
       font-family: "Ubuntu", sans-serif;
       font-size: 1.2em;
