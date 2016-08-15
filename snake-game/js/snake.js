@@ -309,6 +309,14 @@
 	function drawCanvas() {
 		ctx.fillStyle = 'rgba(0,160,0,1)';
 		ctx.fillRect(0, 0, w, h);
+		ctx.strokeStyle = 'rgba(0,255,0,1)';
+		ctx.lineWidth = 0.2;
+		for (var y = 0; y < grid; y++) {
+			for (var x = 0; x < grid; x++) {
+				ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+			}
+		}
+		ctx.lineWidth = 1;
 	}
 	//Рисуем счет
 	function drawScore() {
@@ -446,11 +454,22 @@
 	gameStatus.style.display = 'none';
 	gameStatus.classList.add('game-status');
 	document.body.appendChild(gameStatus);
+	var vkShare = document.querySelector('.vk-share'),
+			fbShare = document.querySelector('.fb-share'),
+			language = navigator.language || navigator.userLanguage;
 	//Остановка игры
 	function gameOver() {
 		canvas.style.zIndex = '0';
 		paused = true;
 		gameStatus.innerHTML = 'gameOver';
+		//Делимся прогрессом в социальных сетях
+		if (language === 'ru' || language === 'ua') {
+			vkShare.href = 'https://vk.com/share.php?url=https://apaniuta.github.io/snake-game&title=Я заработал ' + highScore + ' очков в классической Змейке&description=Попробуйте тоже на своё компьютере-телефоне-планшете, это крутая игра!&image=https://dl.dropboxusercontent.com/u/34119723/web_sites/apaniuta.github.io/snake-game/img/Snake-game.png';
+			fbShare.href = 'https://www.facebook.com/sharer.php?u=https://apaniuta.github.io/snake-game&t=Я заработал ' + highScore + ' очков в классической Змейке';
+		} else {
+			vkShare.href = 'https://vk.com/share.php?url=https://apaniuta.github.io/snake-game&title=I scored ' + highScore + ' points in the classic Snake game&description=Try it to on your desktop-phone-tablet, this is great game!&image=https://dl.dropboxusercontent.com/u/34119723/web_sites/apaniuta.github.io/snake-game/img/Snake-game.png';
+			fbShare.href = 'https://www.facebook.com/sharer.php?u=https://apaniuta.github.io/snake-game&t=I scored ' + highScore + ' points in the classic Snake game';
+		}
 	}
 	//Пауза
 	function pause() {

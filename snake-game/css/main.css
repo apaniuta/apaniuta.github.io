@@ -147,14 +147,26 @@ main {
   .re-menu .game-over h1 {
     cursor: default;
     color: rgba(255, 0, 0, 0.75); }
-  .re-menu .high-score {
-    margin-bottom: 7.5em; }
-    .re-menu .high-score p,
-    .re-menu .high-score span {
-      cursor: default;
-      font-size: 1.2em; }
+  .re-menu p,
+  .re-menu span {
+    cursor: default;
+    font-size: 1.2em; }
   .re-menu h2:hover {
     color: rgba(255, 0, 0, 0.75); }
+  .re-menu .high-score {
+    margin-bottom: 0.5em; }
+  .re-menu .share {
+    margin-bottom: 5.5em;
+    margin-right: 5em; }
+    .re-menu .share .icons {
+      position: absolute;
+      display: inline-block;
+      margin-top: -0.25em;
+      margin-left: 0.25em; }
+    .re-menu .share p {
+      margin-right: 0.2em; }
+    .re-menu .share img {
+      height: 2.5em; }
 
 .control-btns {
   position: absolute;

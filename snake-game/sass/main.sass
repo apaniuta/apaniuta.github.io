@@ -160,14 +160,27 @@ main
 		h1
 			cursor: default
 			color: $focus_text_color
-	.high-score
-		margin-bottom: 7.5em
-		p,
-		span
-			cursor: default
-			font-size: $small_font_size
+	p,
+	span,
+		cursor: default
+		font-size: $small_font_size
 	h2:hover
 		color: $focus_text_color
+	.high-score
+		margin-bottom: .5em
+	.share
+		margin-bottom: 5.5em
+		margin-right: 2 * $large_font_size
+		.icons
+			position: absolute
+			display: inline-block
+			margin-top: -$large_font_size / 10
+			margin-left: $large_font_size / 10
+		p
+			margin-right: .2em
+		img
+			height: $large_font_size
+
 
 .control-btns
 	position: absolute
