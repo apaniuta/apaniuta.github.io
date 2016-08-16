@@ -4,147 +4,198 @@
 //gameSnake.setGameSpeed('slow'); //Установка скорости игры (по умолчанию: средняя)
 gameSnake.init(); //Инициализация
 //gameSnake.start();
-var snake = document.querySelector('.snake'),
-		overlay = document.querySelector('.overlay'),
-		mainMenu = document.querySelector('.main-menu'),
-		gameOptions = document.querySelector('.game-options'),
-		newGame = document.querySelector('.new-game'),
-		gameOptions = document.querySelector('.game-options'),
-		optionsValues = document.querySelector('.options-values'),
-		back = document.querySelector('.back'),
-		yesBound = document.querySelector('.boundaries .yes'),
-		noBound = document.querySelector('.boundaries .no'),
-		yesBlocks = document.querySelector('.blocks .yes'),
-		noBlocks = document.querySelector('.blocks .no'),
-		speedSlow = document.querySelector('.slow'),
-		speedMedium = document.querySelector('.medium'),
-		speedFast = document.querySelector('.fast'),
-		pauseMenu = document.querySelector('.pause-menu'),
-		resume = document.querySelector('.resume'),
-		backToMenuFromPause = document.querySelectorAll('.back-to-menu')[0],
-		reMenu = document.querySelector('.re-menu'),
-		playAgain = document.querySelector('.play-again'),
-		backToMenuFromGameover = document.querySelectorAll('.back-to-menu')[1],
-		highScoreValue = document.querySelector('.high-score-value'),
-		gameStatus = document.querySelector('.game-status'),
-		controlBtns = document.querySelector('.control-btns');
+var DOMelements = {
+		snake: document.querySelector('.snake'),
+		overlay: document.querySelector('.overlay'),
+		mainMenu: document.querySelector('.main-menu'),
+		newGame: document.querySelector('.new-game'),
+		gameOptions: document.querySelector('.game-options'),
+		optionsValues: document.querySelector('.options-values'),
+		back: document.querySelector('.back'),
+		yesBound: document.querySelector('.boundaries .yes'),
+		noBound: document.querySelector('.boundaries .no'),
+		yesBlocks: document.querySelector('.blocks .yes'),
+		noBlocks: document.querySelector('.blocks .no'),
+		speedSlow: document.querySelector('.slow'),
+		speedMedium: document.querySelector('.medium'),
+		speedFast: document.querySelector('.fast'),
+		pauseMenu: document.querySelector('.pause-menu'),
+		resume: document.querySelector('.resume'),
+		backToMenuFromPause: document.querySelectorAll('.back-to-menu')[0],
+		reMenu: document.querySelector('.re-menu'),
+		playAgain: document.querySelector('.play-again'),
+		backToMenuFromGameover: document.querySelectorAll('.back-to-menu')[1],
+		highScoreValue: document.querySelector('.high-score-value'),
+		gameStatus: document.querySelector('.game-status'),
+		controlBtns: document.querySelector('.control-btns')
+};
+function fadeIn(el, speed) {
+	el.style.opacity = 0;
+	el.classList.toggle('hidden');
+	var last = +new Date();
+	var tick = function() {
+		el.style.opacity = +el.style.opacity + (new Date() - last) / (speed || 200);
+		last = +new Date();
+
+		if (+el.style.opacity < 1) {
+			(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+		}
+	};
+	
+	tick();
+	
+}
+
+function fadeOut(el, speed) {
+	el.style.opacity = 1;
+
+	var last = +new Date();
+	var tick = function() {
+		el.style.opacity = +el.style.opacity - (new Date() - last) / (speed || 200);
+		last = +new Date();
+
+		if (+el.style.opacity > 0) {
+			(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+		}
+		if (+el.style.opacity <= 0) {
+				el.classList.toggle('hidden');
+				el.style.opacity = 1;
+			}
+	};
+	
+	tick();
+}
 
 //Проверка статуса игры
 function checkStatus() {
 	var interval;
 	interval = setInterval(function() {
-		if (gameStatus.innerHTML === 'paused') {
+		if (DOMelements.gameStatus.innerHTML === 'paused') {
 			clearInterval(interval);
-			pauseMenu.classList.toggle('hidden');
-			overlay.classList.toggle('hidden');
+			fadeIn(DOMelements.overlay);
+			fadeIn(DOMelements.pauseMenu);
 		}
-		if (gameStatus.innerHTML === 'gameOver') {
-			highScoreValue.innerHTML = gameSnake.getHighScore();
+		if (DOMelements.gameStatus.innerHTML === 'gameOver') {
+			DOMelements.highScoreValue.innerHTML = gameSnake.getHighScore();
 			clearInterval(interval);
-			reMenu.classList.toggle('hidden');
-			overlay.classList.toggle('hidden');
+			fadeIn(DOMelements.overlay, 400);
+			fadeIn(DOMelements.reMenu, 600);
 		}
 	}, 10);
 }
 
-snake.addEventListener('mousedown', function (e) {
+DOMelements.snake.addEventListener('mousedown', function (e) {
 	e.preventDefault();
 });
 
-newGame.addEventListener('click', function () {
-	overlay.classList.toggle('hidden');
-	mainMenu.classList.toggle('hidden');
-	gameSnake.start();
-	checkStatus();
+DOMelements.newGame.addEventListener('click', function () {
+	fadeOut(DOMelements.overlay);
+	fadeOut(DOMelements.mainMenu);
+	setTimeout(function() {
+		gameSnake.start();
+		checkStatus();
+	}, 200);
 });
 
-gameOptions.addEventListener('click', function () {
-	mainMenu.classList.toggle('hidden');
-	optionsValues.classList.toggle('hidden');
+DOMelements.gameOptions.addEventListener('click', function () {
+	fadeOut(DOMelements.mainMenu);
+	setTimeout(function() {
+		fadeIn(DOMelements.optionsValues);
+	}, 200);
 });
 
-back.addEventListener('click', function () {
-	mainMenu.classList.toggle('hidden');
-	optionsValues.classList.toggle('hidden');
+DOMelements.back.addEventListener('click', function () {
+	fadeOut(DOMelements.optionsValues);
+	setTimeout(function() {
+		fadeIn(DOMelements.mainMenu);
+	}, 200);
 });
 
-yesBound.addEventListener('click', function (e) {
+DOMelements.yesBound.addEventListener('click', function (e) {
 	gameSnake.setBoundaries('yes');
-	yesBound.classList.add('focused');
-	noBound.classList.remove('focused');
+	DOMelements.yesBound.classList.add('focused');
+	DOMelements.noBound.classList.remove('focused');
 });
 
-noBound.addEventListener('click', function (e) {
+DOMelements.noBound.addEventListener('click', function (e) {
 	gameSnake.setBoundaries('no');
-	noBound.classList.add('focused');
-	yesBound.classList.remove('focused');
+	DOMelements.noBound.classList.add('focused');
+	DOMelements.yesBound.classList.remove('focused');
 });
 
-yesBlocks.addEventListener('click', function () {
+DOMelements.yesBlocks.addEventListener('click', function () {
 	gameSnake.setBlocks('yes');
-	yesBlocks.classList.add('focused');
-	noBlocks.classList.remove('focused');
+	DOMelements.yesBlocks.classList.add('focused');
+	DOMelements.noBlocks.classList.remove('focused');
 });
 
-noBlocks.addEventListener('click', function () {
+DOMelements.noBlocks.addEventListener('click', function () {
 	gameSnake.setBlocks('no');
-	noBlocks.classList.add('focused');
-	yesBlocks.classList.remove('focused');
+	DOMelements.noBlocks.classList.add('focused');
+	DOMelements.yesBlocks.classList.remove('focused');
 });
 
-speedSlow.addEventListener('click', function () {
+DOMelements.speedSlow.addEventListener('click', function () {
 	gameSnake.setGameSpeed('slow');
-	speedSlow.classList.add('focused');
-	speedMedium.classList.remove('focused');
-	speedFast.classList.remove('focused');
+	DOMelements.speedSlow.classList.add('focused');
+	DOMelements.speedMedium.classList.remove('focused');
+	DOMelements.speedFast.classList.remove('focused');
 });
 
-speedMedium.addEventListener('click', function () {
+DOMelements.speedMedium.addEventListener('click', function () {
 	gameSnake.setGameSpeed('medium');
-	speedSlow.classList.remove('focused');
-	speedMedium.classList.add('focused');
-	speedFast.classList.remove('focused');
+	DOMelements.speedSlow.classList.remove('focused');
+	DOMelements.speedMedium.classList.add('focused');
+	DOMelements.speedFast.classList.remove('focused');
 });
 
-speedFast.addEventListener('click', function () {
+DOMelements.speedFast.addEventListener('click', function () {
 	gameSnake.setGameSpeed('fast');
-	speedSlow.classList.remove('focused');
-	speedMedium.classList.remove('focused');
-	speedFast.classList.add('focused');
+	DOMelements.speedSlow.classList.remove('focused');
+	DOMelements.speedMedium.classList.remove('focused');
+	DOMelements.speedFast.classList.add('focused');
 });
 
-resume.addEventListener('click', function () {
-	overlay.classList.toggle('hidden');
-	pauseMenu.classList.toggle('hidden');
-	gameSnake.resume();
-	checkStatus();
+DOMelements.resume.addEventListener('click', function () {
+	fadeOut(DOMelements.overlay);
+	fadeOut(DOMelements.pauseMenu);
+	setTimeout(function() {
+		gameSnake.resume();
+		checkStatus();
+	}, 200);
 });
 
-backToMenuFromPause.addEventListener('click', function () {
-	pauseMenu.classList.toggle('hidden');
-	mainMenu.classList.toggle('hidden');
+DOMelements.backToMenuFromPause.addEventListener('click', function () {
+	fadeOut(DOMelements.pauseMenu);
+	setTimeout(function() {
+		fadeIn(DOMelements.mainMenu);
+	}, 200);
 });
 
-playAgain.addEventListener('click', function () {
-	overlay.classList.toggle('hidden');
-	reMenu.classList.toggle('hidden');
-	gameSnake.start();
-	checkStatus();
+DOMelements.playAgain.addEventListener('click', function () {
+	fadeOut(DOMelements.overlay);
+	fadeOut(DOMelements.reMenu);
+	setTimeout(function() {
+		gameSnake.start();
+		checkStatus();
+	}, 200);
 });
 
-backToMenuFromGameover.addEventListener('click', function () {
-	reMenu.classList.toggle('hidden');
-	mainMenu.classList.toggle('hidden');
+DOMelements.backToMenuFromGameover.addEventListener('click', function () {
+	fadeOut(DOMelements.reMenu);
+	setTimeout(function() {
+		fadeIn(DOMelements.mainMenu);
+	}, 200);
 });
 //Проверяем девайс, если мобильный или планшет добавляем кнопки для управления
 //!Нужно подключить библиотеку device.js!
 if (device.mobile() || device.tablet()) {
-	controlBtns.classList.remove('hidden');
+	DOMelements.controlBtns.classList.remove('hidden');
 }
 //Масштабируем игру
-snake.style.height = snake.clientWidth + 'px';
-document.body.style.fontSize = snake.clientWidth / 31 + 'px';
+DOMelements.snake.style.height = DOMelements.snake.clientWidth + 'px';
+document.body.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
 window.addEventListener('resize', function () {
-	snake.style.height = snake.clientWidth + 'px';
-	document.body.style.fontSize = snake.clientWidth / 31 + 'px';
+	DOMelements.snake.style.height = DOMelements.snake.clientWidth + 'px';
+	document.body.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
 });

@@ -433,22 +433,6 @@
 			}, delay);
 		}
 	}
-	//Начало игры
-	function start() {
-		canvas.style.zIndex = '1';
-		dir = DIR.RIGHT;
-		speed = settedSpeed || 45;
-		setDelay();
-		score = 0;
-		initSnake();
-		createBlocks();
-		initSnake();
-		createFood();
-		draw();
-		paused = false;
-		interval();
-		gameStatus.innerHTML = '';
-	}
 	//Добавляем div со статусом игры внутри
 	var gameStatus = document.createElement('div');
 	gameStatus.style.display = 'none';
@@ -470,6 +454,22 @@
 			vkShare.href = 'https://vk.com/share.php?url=https://apaniuta.github.io/snake-game&title=I scored ' + highScore + ' points in the classic Snake game&description=Try it to on your desktop-phone-tablet, this is great game!&image=https://dl.dropboxusercontent.com/u/34119723/web_sites/apaniuta.github.io/snake-game/img/Snake-game.png';
 			fbShare.href = 'https://www.facebook.com/sharer.php?u=https://apaniuta.github.io/snake-game&t=I scored ' + highScore + ' points in the classic Snake game';
 		}
+	}
+	//Начало игры
+	function start() {
+		canvas.style.zIndex = '1';
+		dir = DIR.RIGHT;
+		speed = settedSpeed || 45;
+		setDelay();
+		score = 0;
+		initSnake();
+		createBlocks();
+		initSnake();
+		createFood();
+		draw();
+		paused = false;
+		interval();
+		gameStatus.innerHTML = '';
 	}
 	//Пауза
 	function pause() {
@@ -496,8 +496,11 @@
 		//scale();
 		initSnake();
 		createBlocks();
-		createFood();
-		draw();
+		drawCanvas();
+		drawSnake();
+		if (withBlocks) {
+			drawBlocks(blocks);
+		}
 		document.addEventListener('keydown', keyBindings);
 	}
 	//Методы, которые видны наружу
