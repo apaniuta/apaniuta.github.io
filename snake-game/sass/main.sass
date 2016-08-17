@@ -1,16 +1,18 @@
 
 $main_text_color: rgba(0,0,255,0.8)
-$text_shadow_color: 1px 1px .5em rgba(255, 255, 255, 0.4)
+$text_shadow_color: 1px 1px .5rem rgba(255, 255, 255, 0.4)
 $second_text_color: rgba(255, 255, 0, 0.6)
 $focus_text_color: rgba(255, 0, 0, 0.75)
-$huge_font_size: 3em
-$large_font_size: 2.5em
-$medium_font_size: 1.5em
-$small_font_size: 1.2em
+$huge_font_size: 3rem
+$large_font_size: 2.5rem
+$medium_font_size: 1.5rem
+$small_font_size: 1.2rem
+
+html
+	font-size: 20px
 
 body
 	margin: 0
-	font-size: 20px
 
 .hidden
 	display: none
@@ -59,7 +61,7 @@ main
 	width: 100%
 	height: 100%
 	background-color: rgba(30,128,40,0.9)
-	box-shadow: inset 0px 0px .75em .75em rgba(0, 0, 0, 0.3)
+	box-shadow: inset 0px 0px .75rem .75rem rgba(0, 0, 0, 0.3)
 
 .menu
 	position: absolute
@@ -71,15 +73,15 @@ main
 	position: absolute
 	width: 100%
 	top: 50%
-	margin-top: -5.5em
+	margin-top: -5.5rem
 	.new-game
-		margin-bottom: .5em
+		margin-bottom: .5rem
 	h1:hover
 		color: $focus_text_color
 	.created-by
 		position: absolute
-		bottom: -11em
-		right: 1em
+		bottom: -11rem
+		right: 1rem
 		p
 			font-family: 'Ubuntu', sans-serif
 			font-size: $small_font_size
@@ -99,43 +101,42 @@ main
 	position: absolute
 	width: 100%
 	text-align: left
-	margin-left: 1em
-	margin-top: 1em
-	>div
-		margin-bottom: 1em
+	margin-left: 2rem
+	margin-top: 1.5rem
 	h2
 		cursor: default
 	p:hover
 		color: $focus_text_color
 		text-shadow: $text_shadow_color
 	.yes
-		margin-right: .75em
+		margin-right: .75rem
 	.boundaries
+		margin-bottom: 1rem
 		h2
-			margin-right: 2em
+			margin-right: 5rem
 	.blocks
+		margin-bottom: 1.325rem
 		h2
-			margin-right: 4.6em
+			margin-right: 11.5rem
 	.game-speed
 		.game-speed-values
 			display: inline-block
 			text-align: center
 		h2
 			float: left
-			margin-right: 1.6em
-			margin-top: 0.5em
+			margin-right: 4rem
+			margin-top: 1rem
 		p
-			margin-right: .75em
+			margin-right: .75rem
 		p:last-child
 			margin-right: 0
 	.back-from-options
-		position: absolute
-		width: 100%
-		text-align: right
+		margin-bottom: 0
 		h2
-			margin-top: 3.5em
-			margin-right: 1.6em
 			cursor: pointer
+			position: absolute
+			bottom: -4.7em
+			right: 1.7em
 		h2:hover
 			color: $focus_text_color
 
@@ -143,9 +144,9 @@ main
 	position: absolute
 	width: 100%
 	top: 50%
-	margin-top: -5em
+	margin-top: -5rem
 	.resume
-		margin-bottom: .5em
+		margin-bottom: .5rem
 	h1:hover
 		color: $focus_text_color
 
@@ -153,9 +154,9 @@ main
 	position: absolute
 	width: 100%
 	top: 50%
-	margin-top: -9em
+	margin-top: -9rem
 	.play-again
-		margin-bottom: .5em
+		margin-bottom: .5rem
 	.game-over
 		h1
 			cursor: default
@@ -167,9 +168,9 @@ main
 	h2:hover
 		color: $focus_text_color
 	.high-score
-		margin-bottom: .5em
+		margin-bottom: .5rem
 	.share
-		margin-bottom: 5.5em
+		margin-bottom: 5.5rem
 		margin-right: 2 * $large_font_size
 		.icons
 			position: absolute
@@ -177,31 +178,31 @@ main
 			margin-top: -$large_font_size / 10
 			margin-left: $large_font_size / 10
 		p
-			margin-right: .2em
+			margin-right: .2rem
 		img
 			height: $large_font_size
 
 
 .control-btns
 	position: absolute
-	margin-left: 3.5em
-	margin-top: 32em
+	margin-left: 3.5rem
+	margin-top: 32rem
 	div
 		display: inline-block
 		line-height: 0
 	img
-		width: 8em
-		height: 8em
+		width: 8rem
+		height: 8rem
 	img:hover
 		background-color: rgba(0,255,0,.7)
-		border-radius: 4em
+		border-radius: 4rem
 		transition: background-color 0.4s
 	.left
 		float: left
-		margin: 4em 0
+		margin: 4rem 0
 	.right
 		float: right
-		margin: 4em 0
+		margin: 4rem 0
 	.down
 		position: absolute
 

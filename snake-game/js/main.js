@@ -194,8 +194,8 @@ if (device.mobile() || device.tablet()) {
 }
 //Масштабируем игру
 DOMelements.snake.style.height = DOMelements.snake.clientWidth + 'px';
-document.body.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
+document.documentElement.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
 window.addEventListener('resize', function () {
 	DOMelements.snake.style.height = DOMelements.snake.clientWidth + 'px';
-	document.body.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
+	document.documentElement.style.fontSize = DOMelements.snake.clientWidth / 31 + 'px';
 });
