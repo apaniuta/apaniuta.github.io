@@ -116,15 +116,15 @@ main {
     margin-right: 0.75em; }
   .options-values .game-speed p:last-child {
     margin-right: 0; }
-  .options-values .back {
+  .options-values .back-from-options {
     position: absolute;
     width: 100%;
     text-align: right; }
-    .options-values .back h2 {
+    .options-values .back-from-options h2 {
       margin-top: 3.5em;
       margin-right: 1.6em;
       cursor: pointer; }
-    .options-values .back h2:hover {
+    .options-values .back-from-options h2:hover {
       color: rgba(255, 0, 0, 0.75); }
 
 .pause-menu {
@@ -170,20 +170,24 @@ main {
 
 .control-btns {
   position: absolute;
-  margin-left: 5.9em;
-  margin-top: 33em; }
+  margin-left: 3.5em;
+  margin-top: 32em; }
   .control-btns div {
     display: inline-block;
     line-height: 0; }
   .control-btns img {
-    width: 6.4em;
-    height: 6.4em; }
+    width: 8em;
+    height: 8em; }
+  .control-btns img:hover {
+    background-color: rgba(0, 255, 0, 0.7);
+    border-radius: 4em;
+    transition: background-color 0.4s; }
   .control-btns .left {
     float: left;
-    margin: 3.2em 0; }
+    margin: 4em 0; }
   .control-btns .right {
     float: right;
-    margin: 3.2em 0; }
+    margin: 4em 0; }
   .control-btns .down {
     position: absolute; }
 
