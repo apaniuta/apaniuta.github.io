@@ -447,7 +447,7 @@
 		paused = true;
 		gameStatus.innerHTML = 'gameOver';
 		//Делимся прогрессом в социальных сетях
-		if (language === 'ru' || language === 'ua') {
+		if (language === 'ru' || language.toLowerCase() === 'ru-ru' || language === 'ua' || language === 'uk') {
 			vkShare.href = 'https://vk.com/share.php?url=https://apaniuta.github.io/snake-game&title=Я заработал ' + highScore + ' очков в классической Змейке&description=Попробуйте тоже на своё компьютере-телефоне-планшете, это крутая игра!&image=https://dl.dropboxusercontent.com/u/34119723/web_sites/apaniuta.github.io/snake-game/img/Snake-game.png';
 			fbShare.href = 'https://www.facebook.com/sharer.php?u=https://apaniuta.github.io/snake-game&t=Я заработал ' + highScore + ' очков в классической Змейке';
 		} else {

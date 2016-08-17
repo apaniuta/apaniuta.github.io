@@ -8,10 +8,10 @@ var DOMelements = {
 		snake: document.querySelector('.snake'),
 		overlay: document.querySelector('.overlay'),
 		mainMenu: document.querySelector('.main-menu'),
-		newGame: document.querySelector('.new-game'),
-		gameOptions: document.querySelector('.game-options'),
+		newGame: document.querySelector('.new-game h1'),
+		gameOptions: document.querySelector('.game-options h1'),
 		optionsValues: document.querySelector('.options-values'),
-		back: document.querySelector('.back'),
+		backToMenuFromOptions: document.querySelector('.back-from-options h2'),
 		yesBound: document.querySelector('.boundaries .yes'),
 		noBound: document.querySelector('.boundaries .no'),
 		yesBlocks: document.querySelector('.blocks .yes'),
@@ -20,11 +20,11 @@ var DOMelements = {
 		speedMedium: document.querySelector('.medium'),
 		speedFast: document.querySelector('.fast'),
 		pauseMenu: document.querySelector('.pause-menu'),
-		resume: document.querySelector('.resume'),
-		backToMenuFromPause: document.querySelectorAll('.back-to-menu')[0],
+		resume: document.querySelector('.resume h1'),
+		backToMenuFromPause: document.querySelector('.back-from-pause h1'),
 		reMenu: document.querySelector('.re-menu'),
-		playAgain: document.querySelector('.play-again'),
-		backToMenuFromGameover: document.querySelectorAll('.back-to-menu')[1],
+		playAgain: document.querySelector('.play-again h2'),
+		backToMenuFromGameover: document.querySelector('.back-from-re-menu h2'),
 		highScoreValue: document.querySelector('.high-score-value'),
 		gameStatus: document.querySelector('.game-status'),
 		controlBtns: document.querySelector('.control-btns')
@@ -104,7 +104,7 @@ DOMelements.gameOptions.addEventListener('click', function () {
 	}, 200);
 });
 
-DOMelements.back.addEventListener('click', function () {
+DOMelements.backToMenuFromOptions.addEventListener('click', function () {
 	fadeOut(DOMelements.optionsValues);
 	setTimeout(function() {
 		fadeIn(DOMelements.mainMenu);
