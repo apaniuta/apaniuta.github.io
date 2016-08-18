@@ -1,8 +1,9 @@
 $(document).ready(function() {
 
 	$(".portfolio_item").each(function(i){
-		$(this).find("a").attr("href", "#work_" + i);
-		$(this).find(".port_descr").attr("id","work_" + i)
+		$(this).find(".port_item_cont a").attr("href", "#work_" + i);
+		$(this).find("> a").attr("href", "#work_" + i);
+		$(this).find(".port_descr").attr("id","work_" + i);
 	});
 
 	$("#portfolio_grid").mixItUp();
@@ -80,11 +81,9 @@ function applyMinHeight() {
 	}
 }
 
-window.addEventListener("load", applyMinHeight);
-//window.addEventListener("resize", applyMinHeight);
-$(window).on("resize", applyMinHeight);
-
+//$(window).on("resize", applyMinHeight);
 $(window).load(function() { 
+	//applyMinHeight();
 	$(".loader_inner").fadeOut(); 
 	$(".loader").delay(400).fadeOut("slow"); 
 });

@@ -446,8 +446,10 @@ section {
   .port_descr p {
     margin-top: 0; }
   .port_descr img {
-    width: 100%;
-    margin-top: 10px; }
+    max-width: 100%;
+    display: block;
+    padding: 5px;
+    margin: auto; }
 
 .modal-box-content {
   position: relative; }

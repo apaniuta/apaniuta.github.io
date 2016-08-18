@@ -51,6 +51,21 @@
 	.desktop_mnu {
 		display: none;
 	}
+	.portfolio_item .port_item_cont {
+		top: 50%;
+		transition: none;
+	}
+	.portfolio_item .port_item_cont_bg {
+		transition: none;
+	}
+	.portfolio_item > a {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		outline: 0;
+	}
 }
 
 /* Extra Small Devices, Phones */
@@ -66,28 +81,11 @@
 	.main_footer .social_wrap ul {
 		padding-left: 0;
 	}
-	.portfolio_item:hover .port_item_cont {
-		padding-top: 10%;
-	}
-	.portfolio_item .port_item_cont {
-		padding-top: 5%;
-	}
-	.portfolio_item .port_item_cont p {
-		margin: 5% 0;
-	}
 }
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
-	.portfolio_item:hover .port_item_cont {
-		padding-top: 5%;
-	}
-	.portfolio_item .port_item_cont {
-		padding-top: 0%;
-	}
-	.portfolio_item .port_item_cont p {
-		margin: 5% 0;
-	}
+
 }
 
 /*==========  Mobile First Method  ==========*/
